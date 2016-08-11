@@ -1,0 +1,3 @@
+rootProject.name = 'todub'
+
+include ':app'
