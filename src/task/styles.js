@@ -2,8 +2,12 @@ import { StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
   text: {
-    padding: 10,
-    flex: 1
+    paddingTop: 5,
+    paddingRight: 10,
+    paddingBottom: 0,
+    paddingLeft: 10,
+    flex: 1,
+    fontSize: 18
   },
   todo: {
     color: '#333'
