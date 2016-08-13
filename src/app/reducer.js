@@ -4,7 +4,7 @@ const tasks = (state = [], action) => {
   switch (action.type) {
     case UPDATE_TASK_ID:
       let newList = state.slice();
-      let taskToUpdate = newList.findIndex(t => t.id === action.oldId);
+      let taskToUpdate = newList.find(t => t.id === action.oldId);
       taskToUpdate.id = action.newId;
       return newList;
     case SEED_TASKS:

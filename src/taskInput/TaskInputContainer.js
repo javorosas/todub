@@ -18,7 +18,7 @@ const onTaskAdd = (dispatch) => {
     })
       .then(response => response.json())
       .then(response => {
-        dispatch(updateTaskId(id, response._id));
+        dispatch(updateTaskId(id, response.task._id));
       });
   };
 };
