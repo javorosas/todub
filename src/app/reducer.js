@@ -1,7 +1,14 @@
-import { ADD_TASK, REMOVE_TASK, TOGGLE_TASK } from './actionTypes';
+import { ADD_TASK, REMOVE_TASK, TOGGLE_TASK, UPDATE_TASK_ID, SEED_TASKS } from './actionTypes';
 
 const tasks = (state = [], action) => {
   switch (action.type) {
+    case UPDATE_TASK_ID:
+      let newList = state.slice();
+      let taskToUpdate = newList.findIndex(t => t.id === action.oldId);
+      taskToUpdate.id = action.newId;
+      return newList;
+    case SEED_TASKS:
+      return action.tasks;
     case ADD_TASK:
       return [
         ...state,

@@ -14,10 +14,13 @@ export default class TaskList extends Component {
       tasks: []
     };
   }
+  componentDidMount () {
+    this.props.onMount();
+  }
   renderRow (task) {
     return (
       <Task isCompleted={task.isCompleted}
-        onTextPress={() => this.props.onTaskPress(task.id)}
+        onTextPress={() => this.props.onTaskPress(task.id, !task.isCompleted)}
         onDeletePress={() => this.props.onDeletePress(task.id)} >
         {task.text}
       </Task>
