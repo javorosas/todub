@@ -43,8 +43,16 @@
 	<dict>
 		<key>NSExceptionDomains</key>
 		<dict>
+			<!--Include to allow subdomains-->
 			<key>localhost</key>
 			<dict>
+				<key>NSTemporaryExceptionAllowsInsecureHTTPLoads</key>
+				<true/>
+			</dict>
+			<key>prototech.io</key>
+			<dict>
+				<key>NSIncludesSubdomains</key>
+				<true/>
 				<key>NSTemporaryExceptionAllowsInsecureHTTPLoads</key>
 				<true/>
 			</dict>
