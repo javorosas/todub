@@ -55,3 +55,12 @@ export const fetchTasks = () => {
       });
   };
 };
+
+export const deleteTask = (id) => {
+  return function (dispatch) {
+    dispatch(removeTask(id));
+    fetch(routes.removeTask(id), {
+      method: 'DELETE'
+    });
+  };
+};

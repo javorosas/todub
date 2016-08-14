@@ -1,7 +1,7 @@
 /* globals fetch */
 
 import { connect } from 'react-redux';
-import { toggleTask, removeTask, fetchTasks } from '../app/actions';
+import { toggleTask, deleteTask, fetchTasks } from '../app/actions';
 import TaskList from './TaskList';
 import routes from '../app/routes';
 
@@ -23,10 +23,7 @@ const onTaskPress = (dispatch) => {
 
 const onDeletePress = (dispatch) => {
   return (id) => {
-    dispatch(removeTask(id));
-    fetch(routes.removeTask(id), {
-      method: 'DELETE'
-    });
+    dispatch(deleteTask(id));
   };
 };
 
