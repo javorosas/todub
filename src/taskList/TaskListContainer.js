@@ -1,50 +1,24 @@
 /* globals fetch */
 
-import { ToastAndroid } from 'react-native';
 import { connect } from 'react-redux';
-import { toggleTask, removeTask, seedTasks } from '../app/actions';
+import { editCompleted, deleteTask, fetchTasks } from '../app/actions';
 import TaskList from './TaskList';
-import routes from '../app/routes';
-
-const jsonBodyHeaders = {
-  'Accept': 'application/json',
-  'Content-Type': 'application/json'
-};
 
 const onTaskPress = (dispatch) => {
   return (id, isCompleted) => {
-    dispatch(toggleTask(id));
-    fetch(routes.markCompleted(id), {
-      method: 'PUT',
-      headers: jsonBodyHeaders,
-      body: JSON.stringify({isCompleted})
-    });
+    dispatch(editCompleted(id, isCompleted));
   };
 };
 
 const onDeletePress = (dispatch) => {
   return (id) => {
-    dispatch(removeTask(id));
-    fetch(routes.removeTask(id), {
-      method: 'DELETE'
-    });
+    dispatch(deleteTask(id));
   };
 };
 
 const onMount = (dispatch) => {
   return () => {
-    fetch(routes.getAllTasks())
-      .then(response => response.json())
-      .then(response => {
-        dispatch(seedTasks(response.tasks.map(({text, isCompleted, _id}) => {
-          return {
-            text,
-            isCompleted,
-            id: _id
-          };
-        })));
-        ToastAndroid.show('Success', ToastAndroid.SHORT);
-      });
+    dispatch(fetchTasks());
   };
 };
 
