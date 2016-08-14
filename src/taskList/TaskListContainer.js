@@ -1,23 +1,12 @@
 /* globals fetch */
 
 import { connect } from 'react-redux';
-import { toggleTask, deleteTask, fetchTasks } from '../app/actions';
+import { editCompleted, deleteTask, fetchTasks } from '../app/actions';
 import TaskList from './TaskList';
-import routes from '../app/routes';
-
-const jsonBodyHeaders = {
-  'Accept': 'application/json',
-  'Content-Type': 'application/json'
-};
 
 const onTaskPress = (dispatch) => {
   return (id, isCompleted) => {
-    dispatch(toggleTask(id));
-    fetch(routes.markCompleted(id), {
-      method: 'PUT',
-      headers: jsonBodyHeaders,
-      body: JSON.stringify({isCompleted})
-    });
+    dispatch(editCompleted(id, isCompleted));
   };
 };
 

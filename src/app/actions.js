@@ -3,6 +3,11 @@
 import routes from './routes';
 import { ADD_TASK, REMOVE_TASK, TOGGLE_TASK, UPDATE_TASK_ID, SEED_TASKS } from './actionTypes';
 
+const jsonBodyHeaders = {
+  'Accept': 'application/json',
+  'Content-Type': 'application/json'
+};
+
 export const updateTaskId = (oldId, newId) => {
   return {
     type: UPDATE_TASK_ID,
@@ -62,5 +67,31 @@ export const deleteTask = (id) => {
     fetch(routes.removeTask(id), {
       method: 'DELETE'
     });
+  };
+};
+
+export const editCompleted = (id, isCompleted) => {
+  return function (dispatch) {
+    dispatch(toggleTask(id));
+    fetch(routes.markCompleted(id), {
+      method: 'PUT',
+      headers: jsonBodyHeaders,
+      body: JSON.stringify({isCompleted})
+    });
+  };
+};
+
+export const createTask = (text, id) => {
+  return function (dispatch) {
+    dispatch(addTask(text, id));
+    fetch(routes.postTask(), {
+      method: 'POST',
+      headers: jsonBodyHeaders,
+      body: JSON.stringify({text})
+    })
+      .then(response => response.json())
+      .then(response => {
+        dispatch(updateTaskId(id, response.task._id));
+      });
   };
 };
