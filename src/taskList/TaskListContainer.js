@@ -1,8 +1,7 @@
 /* globals fetch */
 
-import { ToastAndroid } from 'react-native';
 import { connect } from 'react-redux';
-import { toggleTask, removeTask, seedTasks } from '../app/actions';
+import { toggleTask, removeTask, fetchTasks } from '../app/actions';
 import TaskList from './TaskList';
 import routes from '../app/routes';
 
@@ -33,18 +32,7 @@ const onDeletePress = (dispatch) => {
 
 const onMount = (dispatch) => {
   return () => {
-    fetch(routes.getAllTasks())
-      .then(response => response.json())
-      .then(response => {
-        dispatch(seedTasks(response.tasks.map(({text, isCompleted, _id}) => {
-          return {
-            text,
-            isCompleted,
-            id: _id
-          };
-        })));
-        ToastAndroid.show('Success', ToastAndroid.SHORT);
-      });
+    dispatch(fetchTasks());
   };
 };
 

@@ -1,3 +1,6 @@
+/* globals fetch */
+
+import routes from './routes';
 import { ADD_TASK, REMOVE_TASK, TOGGLE_TASK, UPDATE_TASK_ID, SEED_TASKS } from './actionTypes';
 
 export const updateTaskId = (oldId, newId) => {
@@ -34,5 +37,21 @@ export const toggleTask = (id) => {
   return {
     type: TOGGLE_TASK,
     id
+  };
+};
+
+export const fetchTasks = () => {
+  return function (dispatch) {
+    return fetch(routes.getAllTasks())
+      .then(response => response.json())
+      .then(response => {
+        dispatch(seedTasks(response.tasks.map(({text, isCompleted, _id}) => {
+          return {
+            text,
+            isCompleted,
+            id: _id
+          };
+        })));
+      });
   };
 };
