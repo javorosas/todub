@@ -8,6 +8,8 @@ export default class TaskList extends Component {
   constructor () {
     super();
     this.renderRow = this.renderRow.bind(this);
+    var ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
+    this.state = { source: ds.cloneWithRows([]) };
   }
   static get defaultProps () {
     return {
@@ -16,6 +18,9 @@ export default class TaskList extends Component {
   }
   componentDidMount () {
     this.props.onMount();
+  }
+  componentWillReceiveProps (newProps, oldProps) {
+    this.setState({ source: this.state.source.cloneWithRows(newProps.tasks) });
   }
   renderRow (task) {
     return (
@@ -27,10 +32,8 @@ export default class TaskList extends Component {
     );
   }
   render () {
-    var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
-    var dataSource = ds.cloneWithRows(this.props.tasks);
     return (
-      <ListView enableEmptySections dataSource={dataSource} renderRow={this.renderRow} />
+      <ListView enableEmptySections dataSource={this.state.source} renderRow={this.renderRow} />
     );
   }
 }

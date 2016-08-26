@@ -25,10 +25,19 @@ const tasks = (state = [], action) => {
         ...state.slice(index + 1)
       ];
     case TOGGLE_TASK:
-      let newState = state.slice();
-      let task = newState.find(t => t.id === action.id);
-      task.isCompleted = !task.isCompleted;
-      return newState;
+      {
+        let tasks = state.map(task => {
+          if (task.id === action.id) {
+            return {
+              id: task.id,
+              text: task.text,
+              isCompleted: !task.isCompleted
+            };
+          }
+          return task;
+        });
+        return tasks;
+      }
     default:
       return state;
   }
